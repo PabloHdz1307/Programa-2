@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\Pablo Hernandez\Documents\Programa 2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm Wed Oct 01 09:46:28 2025
+AVRASM ver. 2.2.8  C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm Wed Oct 01 10:40:19 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
@@ -1015,7 +1015,7 @@ AVRASM ver. 2.2.8  C:\Users\Pablo Hernandez\Documents\Programa 2\A2_Micro_PabloH
                                  //Programa principal
 000005 e0f1                      		ldi ZH,high(var1) //Carga en la parte alta de Z la parte alta de la dirección de var1
 000006 e2e0                      		ldi ZL,low(var1)  //Carga en la parte baja de Z la parte baja de la dirección var1
-000007 e001                      		ldi nhex,0x01     //aqui se carga en valor de n menor o igual a 99
+000007 e00f                      		ldi nhex,0x0F     //aqui se carga en valor de n menor o igual a 99
                                  bucle_hex:
 000008 9301                      		st Z+,nhex		//Guarda el valor de nhex en la direccion a la que apunta Z y lo incrementa
 000009 950a                      		dec	nhex		//Decrementa nhex
@@ -1027,8 +1027,11 @@ AVRASM ver. 2.2.8  C:\Users\Pablo Hernandez\Documents\Programa 2\A2_Micro_PabloH
                                  
 00000c e0f1                      		ldi ZH,high(var1) //Carga en la parte alta de Z la parte alta de la dirección de var1
 00000d e2e0                      		ldi ZL,low(var1)  //Carga en la parte baja de Z la parte baja de la dirección var1
-00000e e0b2                      		ldi XH,high(ramdir)	;multiplica por 2 para obtener el byte
-00000f e0a0                      		ldi XL,low(ramdir)	;multiplica por 2 para obtener el byte
+00000e e0b2                      		ldi XH,high(ramdir)	;Carga en la parte alta de X la parte alta de la dirección de ramdir
+00000f e0a0                      		ldi XL,low(ramdir)	;""
+                                 
+000010 9101                      		ld nhex,Z+	
+                                 
                                  
                                  
                                  
@@ -1055,9 +1058,9 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   0 z  :   1 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   0 z  :   2 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   8 r17:   0 r18:   0 r19:   0 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:   9 r17:   0 r18:   0 r19:   0 r20:   0 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   1 r27:   1 r28:   0 
 r29:   0 r30:   2 r31:   2 
 Registers used: 6 out of 35 (17.1%)
@@ -1073,7 +1076,7 @@ clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   1 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :   9 lds   :   0 lpm   :   0 lsl   :   0 
+ld    :   1 ldd   :   0 ldi   :   9 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   2 pop   :   0 
 push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   1 rol   :   0 
@@ -1082,12 +1085,12 @@ sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   1 std   :   0 sts   :   0 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 7 out of 113 (6.2%)
+Instructions used: 8 out of 113 (7.1%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000020     32      0     32   32768   0.1%
+[.cseg] 0x000000 0x000022     34      0     34   32768   0.1%
 [.dseg] 0x000100 0x000121      0      1      1    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

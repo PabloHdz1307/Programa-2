@@ -29,7 +29,7 @@ main:
 //Programa principal
 		ldi ZH,high(var1) //Carga en la parte alta de Z la parte alta de la dirección de var1
 		ldi ZL,low(var1)  //Carga en la parte baja de Z la parte baja de la dirección var1
-		ldi nhex,0x01     //aqui se carga en valor de n menor o igual a 99
+		ldi nhex,0x0F     //aqui se carga en valor de n menor o igual a 99
 bucle_hex:
 		st Z+,nhex		//Guarda el valor de nhex en la direccion a la que apunta Z y lo incrementa
 		dec	nhex		//Decrementa nhex
@@ -41,13 +41,22 @@ bucle_hex:
 
 		ldi ZH,high(var1) //Carga en la parte alta de Z la parte alta de la dirección de var1
 		ldi ZL,low(var1)  //Carga en la parte baja de Z la parte baja de la dirección var1
-		ldi XH,high(ramdir)	;multiplica por 2 para obtener el byte
-		ldi XL,low(ramdir)	;multiplica por 2 para obtener el byte
+		ldi XH,high(ramdir)	;Carga en la parte alta de X la parte alta de la dirección de ramdir
+		ldi XL,low(ramdir)	;""
+bucle:
+
+		ld nhex,Z+ //Carga en nhex lo que hay en Z e incrementa Z
+		call conversion
+
+			
 
 
 
 
 
+
+//Subrutina de conversión
+conversion:
 		
 
 
