@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm Wed Oct 01 10:40:19 2025
+AVRASM ver. 2.2.8  C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm Wed Oct 01 14:00:54 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
@@ -1001,46 +1001,108 @@ AVRASM ver. 2.2.8  C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_M
                                  .cseg 
                                  .org 0x00
                                  .def nhex = r16
-                                 .equ ramdir = 0x0200
-000000 c000                      	rjmp main
+                                 .def mem = r17
+                                 .def count = r20
+                                 .equ ramdir = 0x0200  //Dirección de inicio de escritura en la RAM
+                                 .equ n = 0x13  //aquí se define el valor de n
+000000 c065                      	rjmp main
+                                 //Look Up Table
+                                 tabla_dec:
+000001 0100
+000002 0302
+000003 0504
+000004 0706
+000005 0908                      	.db 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09
+000006 1110
+000007 1312
+000008 1514
+000009 1716
+00000a 1918                      	.db 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19
+00000b 2120
+00000c 2322
+00000d 2524
+00000e 2726
+00000f 2928                      	.db 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29
+000010 3130
+000011 3332
+000012 3534
+000013 3736
+000014 3938                      	.db 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39
+000015 4140
+000016 4342
+000017 4544
+000018 4746
+000019 4948                      	.db 0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49
+00001a 5150
+00001b 5352
+00001c 5554
+00001d 5756
+00001e 5958                      	.db 0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59
+00001f 6160
+000020 6362
+000021 6564
+000022 6766
+000023 6968                      	.db 0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69
+000024 7170
+000025 7372
+000026 7574
+000027 7776
+000028 7978                      	.db 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79
+000029 8180
+00002a 8382
+00002b 8584
+00002c 8786
+00002d 8988                      	.db 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89
+00002e 9190
+00002f 9392
+000030 9594
+000031 9796
+000032 9998                      	.db 0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99
+                                 .align 2 //asegura que la siguiente instrucción a ejecutarse esté en una driección par
                                  
                                  //Programa Principal
                                  main:
                                  ;Inicia el Stack
-000001 ef0f                          ldi     R16, low(RAMEND)
-000002 bf0d                          out     SPL, R16
-000003 e008                          ldi     R16, high(RAMEND)
-000004 bf0e                          out     SPH, R16
+000066 ef0f                          ldi     R16, low(RAMEND)
+000067 bf0d                          out     SPL, R16
+000068 e008                          ldi     R16, high(RAMEND)
+000069 bf0e                          out     SPH, R16
                                  
                                  //Programa principal
-000005 e0f1                      		ldi ZH,high(var1) //Carga en la parte alta de Z la parte alta de la dirección de var1
-000006 e2e0                      		ldi ZL,low(var1)  //Carga en la parte baja de Z la parte baja de la dirección var1
-000007 e00f                      		ldi nhex,0x0F     //aqui se carga en valor de n menor o igual a 99
+00006a e0b1                      		ldi XH,high(var1) //Carga en la parte alta de X la parte alta de la dirección de var1
+00006b e2a0                      		ldi XL,low(var1)  //Carga en la parte baja de X la parte baja de la dirección var1
+00006c e103                      		ldi nhex,n     //aqui se carga el valor de n
                                  bucle_hex:
-000008 9301                      		st Z+,nhex		//Guarda el valor de nhex en la direccion a la que apunta Z y lo incrementa
-000009 950a                      		dec	nhex		//Decrementa nhex
-                                 
-00000a 3f0f                      		cpi	nhex,0xFF  //compara si nhex es igual a -1 (0xFF)
-00000b f7e1                      		brne bucle_hex	//si no es igual, salta al bucle hex
+00006d 930d                      		st X+,nhex		//Guarda el valor de nhex en la direccion a la que apunta X y lo incrementa
+00006e 950a                      		dec	nhex		//Decrementa nhex
+00006f 3f0f                      		cpi	nhex,0xFF  //compara si nhex es igual a -1 (0xFF)
+000070 f7e1                      		brne bucle_hex	//si no es igual, salta al bucle hex
                                  
                                  //Conversión y almacenamiento
+000071 e144                      		ldi count, n + 1			//controla el número de iteraciones del bucle_conv
+000072 e0b1                      		ldi XH,high(var1)			 // Apuntador para leer 
+000073 e2a0                      		ldi XL,low(var1)			// los datos de la memoria RAM (0x120)
                                  
-00000c e0f1                      		ldi ZH,high(var1) //Carga en la parte alta de Z la parte alta de la dirección de var1
-00000d e2e0                      		ldi ZL,low(var1)  //Carga en la parte baja de Z la parte baja de la dirección var1
-00000e e0b2                      		ldi XH,high(ramdir)	;Carga en la parte alta de X la parte alta de la dirección de ramdir
-00000f e0a0                      		ldi XL,low(ramdir)	;""
+000074 e0d2                      		ldi YH,high(ramdir)			;Apuntador para escribir
+000075 e0c0                      		ldi YL,low(ramdir)			; los datos en la memoria RAM (0x0200)
                                  
-000010 9101                      		ld nhex,Z+	
+                                 bucle_conv:
+000076 911d                      		ld mem, X+					// Carga en mem el dato de la dirección a la que apunta X y lo incrementa
                                  
+                                 	//búsqueda en tabla
+000077 e0f0                      		ldi ZH,high(tabla_dec*2)	//carga la parte alta de la dirección de la tabla
+000078 e0e2                      		ldi ZL,low(tabla_dec*2)		//Carga la parte baja de la dirección de la tabla
+000079 0fe1                      		add ZL, mem					//Le suma el índice donde se halla el dato
                                  
+00007a 9114                      		lpm mem, Z					//Carga en mem el valor desde la tabla
                                  
+00007b 9319                      		st Y+, mem					//Guarda en la RAM el valor de mem, ademas incrementa a Y
+00007c 954a                      		dec count
+00007d f7c1                      		brne bucle_conv
                                  
-                                 
-                                 
-                                 		
-                                 
-                                 
-                                 
+                                 end_loop:
+00007e cfff                      		rjmp end_loop
+                                 			
 
 
 RESOURCE USE INFORMATION
@@ -1058,39 +1120,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   0 z  :   2 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   2 y  :   1 z  :   1 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   9 r17:   0 r18:   0 r19:   0 r20:   0 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   1 r27:   1 r28:   0 
-r29:   0 r30:   2 r31:   2 
-Registers used: 6 out of 35 (17.1%)
+r13:   0 r14:   0 r15:   0 r16:   8 r17:   4 r18:   0 r19:   0 r20:   2 
+r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   2 r27:   2 r28:   1 
+r29:   1 r30:   2 r31:   1 
+Registers used: 12 out of 35 (34.3%)
 
 "ATmega328P" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   0 add   :   1 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   1 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   1 cpse  :   0 dec   :   2 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   0 
-ld    :   1 ldd   :   0 ldi   :   9 lds   :   0 lpm   :   0 lsl   :   0 
+ld    :   1 ldd   :   0 ldi   :  12 lds   :   0 lpm   :   2 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   2 pop   :   0 
-push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   1 rol   :   0 
+push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   2 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   1 std   :   0 sts   :   0 
+sez   :   0 sleep :   0 spm   :   0 st    :   2 std   :   0 sts   :   0 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 8 out of 113 (7.1%)
+Instructions used: 10 out of 113 (8.8%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000022     34      0     34   32768   0.1%
+[.cseg] 0x000000 0x0000fe     52    100    152   32768   0.5%
 [.dseg] 0x000100 0x000121      0      1      1    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

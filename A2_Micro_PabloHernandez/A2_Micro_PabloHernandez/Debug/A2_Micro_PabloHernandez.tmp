@@ -23,7 +23,10 @@
  </OUTPUT_FILES>
  <LABELS>
   <var1><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>12</LINE></var1>
-  <main><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>22</LINE></main>
-  <bucle_hex><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>33</LINE></bucle_hex>
+  <main><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>38</LINE></main>
+  <tabla_dec><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>24</LINE></tabla_dec>
+  <bucle_hex><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>49</LINE></bucle_hex>
+  <bucle_conv><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>63</LINE></bucle_conv>
+  <end_loop><FILE>C:\Users\Pablo Hernandez\Documents\Programa 2\Programa-2\A2_Micro_PabloHernandez\A2_Micro_PabloHernandez\main.asm</FILE><LINE>77</LINE></end_loop>
  </LABELS>
 </ASSEMBLER_INFO>
